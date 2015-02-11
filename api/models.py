@@ -45,7 +45,7 @@ class Recording(models.Model):
 	data = models.CharField(max_length=1000, null=True)
 	transmitter = models.ForeignKey("Transmitter")
 	receiver = models.ForeignKey("Receiver")
-	time = models.DateTimeField()
+	time = models.DateTimeField(auto_now_add=True, blank=True)
 
 class Transmitter(models.Model):
 	mac_addr = models.CharField(max_length=100, unique=True)
