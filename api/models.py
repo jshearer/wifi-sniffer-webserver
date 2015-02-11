@@ -5,7 +5,7 @@ from jsonfield import JSONField
 
 class Host(models.Model):
 	name = models.CharField(max_length=400)
-	device_uid = models.CharField(max_length=100)
+	device_uid = models.CharField(max_length=100, unique=True)
 	location = models.ForeignKey("Location")
 
 	def __unicode__(self):
@@ -13,7 +13,7 @@ class Host(models.Model):
 
 class Receiver(models.Model):
 	host = models.ForeignKey("Host")
-	mac_addr = models.CharField(max_length=100)
+	mac_addr = models.CharField(max_length=100, unique=True)
 	x = models.FloatField()
 	y = models.FloatField()
 	z = models.FloatField()
@@ -48,7 +48,7 @@ class Recording(models.Model):
 	time = models.DateTimeField()
 
 class Transmitter(models.Model):
-	mac_addr = models.CharField(max_length=100)
+	mac_addr = models.CharField(max_length=100, unique=True)
 	name = models.CharField(max_length=100)
 
 	def __unicode__(self):
