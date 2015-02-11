@@ -18,6 +18,9 @@ class Receiver(models.Model):
 	y = models.FloatField()
 	z = models.FloatField()
 
+	def __unicode__(self):
+		return "%s at %s"%(self.mac_addr,self.host)
+
 class Location(models.Model):
 	name = models.CharField(max_length=100)
 	wifi_settings = models.ForeignKey("WifiSettings")
@@ -48,6 +51,9 @@ class Transmitter(models.Model):
 	mac_addr = models.CharField(max_length=100)
 	name = models.CharField(max_length=100)
 
+	def __unicode__(self):
+		return self.name
+
 class CalculatedPosition(models.Model):
 	time = models.DateTimeField()
 	transmitter = models.ForeignKey("Transmitter")
@@ -55,3 +61,6 @@ class CalculatedPosition(models.Model):
 	x = models.FloatField()
 	y = models.FloatField()
 	z = models.FloatField()
+
+	def __unicode__(self):
+		return "(%f, %f, %f) {%s}"%(self.x, self.y, self.z, self.transmitter)

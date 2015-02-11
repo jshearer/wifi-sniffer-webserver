@@ -11,7 +11,7 @@ router.register(r'receivers', views.ReceiverViewSet)
 router.register(r'transmitters', views.TransmitterViewSet)
 router.register(r'wifisettings', views.WifiSettingsViewSet)
 router.register(r'recordings', views.RecordingViewSet)
-router.register(r'location', views.LocationViewSet)
+router.register(r'locations', views.LocationViewSet)
 router.register(r'calculatedpositions', views.CalculatedPositionViewSet)
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
