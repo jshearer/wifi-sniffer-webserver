@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
+from rest_framework_bulk import BulkListSerializer, BulkSerializerMixin, ListBulkCreateUpdateDestroyAPIView
 
 from models import Host, Receiver, WifiSettings, Location, Recording, Transmitter, CalculatedPosition
 
@@ -31,10 +32,12 @@ class LocationSerializer(serializers.HyperlinkedModelSerializer):
 		model = Location
 		fields = ('pk', 'url', 'name', 'wifi_settings')
 		
-class RecordingSerializer(serializers.HyperlinkedModelSerializer):
+class RecordingSerializer(BulkSerializerMixin, serializers.HyperlinkedModelSerializer):
 	class Meta:
 		model = Recording
 		fields = ('pk', 'url', 'rssi', 'data', 'transmitter', 'receiver', 'time')
+		# only necessary in DRF3
+        list_serializer_class = BulkListSerializer
 
 class TransmitterSerializer(serializers.HyperlinkedModelSerializer):
 	class Meta:

@@ -1,11 +1,12 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
+from rest_framework_bulk import BulkModelViewSet
 
 from models import Host, Receiver, WifiSettings, Location, Recording, Transmitter, CalculatedPosition
 from serializers import *
 
 
-class UserViewSet(viewsets.ModelViewSet):
+class UserViewSet(BulkModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.
     """
@@ -13,7 +14,7 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
 
 
-class GroupViewSet(viewsets.ModelViewSet):
+class GroupViewSet(BulkModelViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
     """
@@ -22,7 +23,7 @@ class GroupViewSet(viewsets.ModelViewSet):
 
 
 
-class HostViewSet(viewsets.ModelViewSet):
+class HostViewSet(BulkModelViewSet):
     """
     API endpoint that allows hosts to be viewed or edited.
     """
@@ -30,14 +31,14 @@ class HostViewSet(viewsets.ModelViewSet):
     serializer_class = HostSerializer
 
 
-class ReceiverViewSet(viewsets.ModelViewSet):
+class ReceiverViewSet(BulkModelViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
     """
     queryset = Receiver.objects.all()
     serializer_class = ReceiverSerializer
 
-class WifiSettingsViewSet(viewsets.ModelViewSet):
+class WifiSettingsViewSet(BulkModelViewSet):
     """
     API endpoint that allows hosts to be viewed or edited.
     """
@@ -45,14 +46,14 @@ class WifiSettingsViewSet(viewsets.ModelViewSet):
     serializer_class = WifiSettingsSerializer
 
 
-class RecordingViewSet(viewsets.ModelViewSet):
+class RecordingViewSet(BulkModelViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
     """
     queryset = Recording.objects.all()
     serializer_class = RecordingSerializer
 
-class TransmitterViewSet(viewsets.ModelViewSet):
+class TransmitterViewSet(BulkModelViewSet):
     """
     API endpoint that allows hosts to be viewed or edited.
     """
@@ -60,14 +61,14 @@ class TransmitterViewSet(viewsets.ModelViewSet):
     serializer_class = TransmitterSerializer
 
 
-class LocationViewSet(viewsets.ModelViewSet):
+class LocationViewSet(BulkModelViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
     """
     queryset = Location.objects.all()
     serializer_class = LocationSerializer
 
-class CalculatedPositionViewSet(viewsets.ModelViewSet):
+class CalculatedPositionViewSet(BulkModelViewSet):
     """
     API endpoint that allows hosts to be viewed or edited.
     """
