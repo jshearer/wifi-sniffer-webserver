@@ -13,7 +13,6 @@ develop-eggs/
 dist/
 downloads/
 eggs/
-.eggs/
 lib/
 lib64/
 parts/
@@ -54,4 +53,13 @@ docs/_build/
 # PyBuilder
 target/
 
-.sqlite3
+*.csv
+*.gnumeric
+*.pcapng
+*.swp
+*.pcap
+
+.venv/
+absible/
+*.pyc
+*.sqlite3

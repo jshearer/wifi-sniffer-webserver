@@ -36,7 +36,7 @@ class RecordingSerializer(BulkSerializerMixin, serializers.HyperlinkedModelSeria
 	class Meta:
 		model = Recording
 		fields = ('pk', 'url', 'rssi', 'data', 'transmitter', 'receiver', 'time')
-		# only necessary in DRF3
+		#This is for bulk update/delete
         list_serializer_class = BulkListSerializer
 
 class TransmitterSerializer(serializers.HyperlinkedModelSerializer):
