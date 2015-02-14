@@ -63,3 +63,4 @@ target/
 absible/
 *.pyc
 *.sqlite3
+*.sqlite3-journal
