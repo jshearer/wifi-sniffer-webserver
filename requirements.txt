@@ -5,3 +5,4 @@ django-jsonfield==0.9.13
 djangorestframework==3.0.5
 djangorestframework-bulk==0.2
 gunicorn==19.2.1
+psycopg2==2.6
