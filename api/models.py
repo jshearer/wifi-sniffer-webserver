@@ -10,7 +10,7 @@ class Host(models.Model):
 	enabled = models.BooleanField(default=False)
 
 	def __unicode__(self):
-		return "%s at %s"%(self.name, self.location)
+		return "Host(%s at %s)"%(self.name, self.location)
 
 class Receiver(models.Model):
 	host = models.ForeignKey("Host")
@@ -20,14 +20,14 @@ class Receiver(models.Model):
 	z = models.FloatField()
 
 	def __unicode__(self):
-		return "%s at %s"%(self.mac_addr,self.host)
+		return "Receiver(%s at %s)"%(self.mac_addr,self.host)
 
 class Location(models.Model):
 	name = models.CharField(max_length=100)
 	wifi_settings = models.ForeignKey("WifiSettings")
 
 	def __unicode__(self):
-		return self.name
+		return "Location(%s)"%self.name
 
 class WifiSettings(models.Model):
 	enabled = models.BooleanField(default=True)
@@ -38,7 +38,7 @@ class WifiSettings(models.Model):
 	hidden = models.BooleanField(default=False)
 
 	def __unicode__(self):
-		return "ESSID: %s, Security: %s"%(self.ESSID, self.security)
+		return "WifiSettings(ESSID: %s, Security: %s)"%(self.ESSID, self.security)
 
 class Recording(models.Model):
 	receiver = models.ForeignKey("Receiver")
@@ -49,14 +49,14 @@ class Recording(models.Model):
 	time = models.DateTimeField(auto_now_add=True, blank=True)
 
 	def __unicode__(self):
-		return "Transmitter: %s rssi: %i, Receiver: %s"%(str(self.transmitter),self.rssi,str(self.receiver))
+		return "Recording(Transmitter: %s rssi: %i, Receiver: %s)"%(str(self.transmitter),self.rssi,str(self.receiver))
 
 class Transmitter(models.Model):
 	mac_addr = models.CharField(max_length=100, unique=True)
 	name = models.CharField(max_length=100)
 
 	def __unicode__(self):
-		return self.name
+		return "Transmitter(%s : %s)"%(self.mac_addr,self.name)
 
 class CalculatedPosition(models.Model):
 	time = models.DateTimeField()
@@ -67,4 +67,4 @@ class CalculatedPosition(models.Model):
 	z = models.FloatField()
 
 	def __unicode__(self):
-		return "(%f, %f, %f) {%s}"%(self.x, self.y, self.z, self.transmitter)
+		return "CalculatedPosition(%f, %f, %f) {%s}"%(self.x, self.y, self.z, self.transmitter)
