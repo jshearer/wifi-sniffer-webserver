@@ -49,7 +49,7 @@ class Recording(models.Model):
 	time = models.DateTimeField(auto_now_add=True, blank=True)
 
 	def __unicode__(self):
-		return "Recording(%s rssi: %i, %s)"%(str(self.transmitter),self.rssi,str(self.receiver))
+		return "Recording(%s, rssi: %i, %s)"%(str(self.transmitter),self.rssi,str(self.receiver))
 
 class Transmitter(models.Model):
 	mac_addr = models.CharField(max_length=100, unique=True)
