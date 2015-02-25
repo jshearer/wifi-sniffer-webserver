@@ -1,5 +1,7 @@
 from django.conf.urls import url, include
 from rest_framework_bulk.routes import BulkRouter
+from django.contrib import admin
+
 from api import views
 
 router = BulkRouter()
@@ -17,5 +19,6 @@ router.register(r'calculatedpositions', views.CalculatedPositionViewSet)
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
     url(r'^', include(router.urls)),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^admin/', include(admin.site.urls))
 ]
