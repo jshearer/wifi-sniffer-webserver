@@ -15,6 +15,7 @@ class Host(models.Model):
 class Receiver(models.Model):
 	host = models.ForeignKey("Host")
 	mac_addr = models.CharField(max_length=100, unique=True)
+	channel = models.IntegerField(default=6, null=True)
 	x = models.FloatField()
 	y = models.FloatField()
 	z = models.FloatField()
