@@ -20,7 +20,7 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
 class ReceiverSerializer(serializers.HyperlinkedModelSerializer):
 	class Meta:
 		model = Receiver
-		fields = ('pk', 'url', 'host', 'mac_addr', 'x', 'y', 'z')
+		fields = ('pk', 'url', 'host', 'mac_addr', 'channel', 'x', 'y', 'z')
 
 class HostSerializer(serializers.HyperlinkedModelSerializer):
 	class Meta:

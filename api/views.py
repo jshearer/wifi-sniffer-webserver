@@ -37,7 +37,7 @@ class ReceiverViewSet(BulkModelViewSet):
     """
     queryset = Receiver.objects.all()
     serializer_class = ReceiverSerializer
-    filter_fields = ('host', 'mac_addr', 'x', 'y', 'z')
+    filter_fields = ('host', 'mac_addr', 'channel', 'x', 'y', 'z')
 
 class WifiSettingsViewSet(BulkModelViewSet):
     """
