@@ -7,6 +7,7 @@ class Host(models.Model):
 	name = models.CharField(max_length=400)
 	device_uid = models.CharField(max_length=100, unique=True)
 	location = models.ForeignKey("Location")
+	enabled = models.BooleanField(default=False)
 
 	def __unicode__(self):
 		return "%s at %s"%(self.name, self.location)
