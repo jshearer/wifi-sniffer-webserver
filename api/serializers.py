@@ -25,7 +25,7 @@ class ReceiverSerializer(serializers.HyperlinkedModelSerializer):
 class HostSerializer(serializers.HyperlinkedModelSerializer):
 	class Meta:
 		model = Host
-		fields = ('pk', 'url', 'name', 'device_uid', 'location')
+		fields = ('pk', 'url', 'name', 'device_uid', 'location', 'enabled')
 
 class LocationSerializer(serializers.HyperlinkedModelSerializer):
 	class Meta:

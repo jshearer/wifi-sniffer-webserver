@@ -29,7 +29,7 @@ class HostViewSet(BulkModelViewSet):
     """
     queryset = Host.objects.all()
     serializer_class = HostSerializer
-    filter_fields = ('name', 'device_uid', 'location')
+    filter_fields = ('name', 'device_uid', 'location', 'enabled')
 
 class ReceiverViewSet(BulkModelViewSet):
     """
