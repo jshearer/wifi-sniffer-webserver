@@ -38,6 +38,9 @@ def get_receiver_data(receiver_pks):
 
 @shared_task
 def new_recording(transmitter_pk, receiver_pk, rssi, timestamp):
+	#This is nessecary so that the transmitter pk can be a key in a mongo collection, because apparently only strings can be keys.
+	transmitter_pk = str(transmitter_pk)
+	
 	cfg = cfg_collection.find_one()
 
 	insert = False
