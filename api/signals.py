@@ -7,4 +7,4 @@ from tasks import new_recording
 @receiver(post_save, sender=Recording)
 def my_handler(sender, **kwargs):
 	rec = kwargs['instance']
-	print(rec.transmitter.pk, rec.receiver.pk, rec.rssi, rec.time)
+	new_recording.delay(rec.transmitter.pk, rec.receiver.pk, rec.rssi, rec.time)
