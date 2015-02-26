@@ -13,6 +13,7 @@ django-staticfiles==1.2.1
 djangorestframework==3.0.5
 djangorestframework-bulk==0.2
 kombu==3.0.24
+MySQL-python==1.2.5
 Padding==0.4
 pycrypto==2.6.1
 pytz==2014.10
