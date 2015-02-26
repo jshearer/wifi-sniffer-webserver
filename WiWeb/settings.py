@@ -42,24 +42,24 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = (
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'rest_framework',
-    'api'
+	'django.contrib.admin',
+	'django.contrib.auth',
+	'django.contrib.contenttypes',
+	'django.contrib.sessions',
+	'django.contrib.messages',
+	'django.contrib.staticfiles',
+	'rest_framework',
+	'api'
 )
 
 MIDDLEWARE_CLASSES = (
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+	'django.contrib.sessions.middleware.SessionMiddleware',
+	'django.middleware.common.CommonMiddleware',
+	'django.middleware.csrf.CsrfViewMiddleware',
+	'django.contrib.auth.middleware.AuthenticationMiddleware',
+	'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
+	'django.contrib.messages.middleware.MessageMiddleware',
+	'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
 ROOT_URLCONF = 'WiWeb.urls'
@@ -70,9 +70,21 @@ WSGI_APPLICATION = 'WiWeb.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
-DATABASES = {
-    'default': dj_database_url.config(default='postgres://joseph:dev_account@localhost:5432/django_dev_db')
-}
+if 'RDS_HOSTNAME' in os.environ:
+	DATABASES = {
+		'default': {
+			'ENGINE': 'django.db.backends.mysql',
+			'NAME': os.environ['RDS_DB_NAME'],
+			'USER': os.environ['RDS_USERNAME'],
+			'PASSWORD': os.environ['RDS_PASSWORD'],
+			'HOST': os.environ['RDS_HOSTNAME'],
+			'PORT': os.environ['RDS_PORT'],
+		}
+	}
+else:
+	DATABASES = {
+		'default': dj_database_url.config(default='postgres://joseph:dev_account@localhost:5432/django_dev_db')
+	}
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
@@ -88,13 +100,13 @@ USE_L10N = True
 USE_TZ = True
 
 REST_FRAMEWORK = {
-    'PAGINATE_BY': 30,                 # Default to 10
-    'PAGINATE_BY_PARAM': 'page_size',  # Allow client to override, using `?page_size=xxx`.
-    'MAX_PAGINATE_BY': 400,            # Maximum limit allowed when using `?page_size=xxx`.
-    'DEFAULT_FILTER_BACKENDS': ('rest_framework.filters.DjangoFilterBackend',),
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-    )
+	'PAGINATE_BY': 30,                 # Default to 10
+	'PAGINATE_BY_PARAM': 'page_size',  # Allow client to override, using `?page_size=xxx`.
+	'MAX_PAGINATE_BY': 400,            # Maximum limit allowed when using `?page_size=xxx`.
+	'DEFAULT_FILTER_BACKENDS': ('rest_framework.filters.DjangoFilterBackend',),
+	'DEFAULT_PERMISSION_CLASSES': (
+		'rest_framework.permissions.IsAuthenticated',
+	)
 }
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
@@ -115,31 +127,31 @@ logging.warning(STATIC_ROOT)
 STATIC_URL = '/static/'
 
 LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "handlers": {
-        "console": {
-            "level": "INFO",
-            "class": "logging.StreamHandler",
-        },
-    },
-    "loggers": {
-        "django": {
-            "handlers": ["console"],
-        }
-    }
+	"version": 1,
+	"disable_existing_loggers": False,
+	"handlers": {
+		"console": {
+			"level": "INFO",
+			"class": "logging.StreamHandler",
+		},
+	},
+	"loggers": {
+		"django": {
+			"handlers": ["console"],
+		}
+	}
 }
 
 TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-    os.path.join(BASE_DIR, 'templates').replace('\\','/'),
+	# Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+	# Always use forward slashes, even on Windows.
+	# Don't forget to use absolute paths, not relative paths.
+	os.path.join(BASE_DIR, 'templates').replace('\\','/'),
 )
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
+	'django.template.loaders.filesystem.Loader',
+	'django.template.loaders.app_directories.Loader',
 #     'django.template.loaders.eggs.Loader',
 )
