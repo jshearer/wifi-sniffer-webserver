@@ -10,7 +10,6 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-import dj_database_url
 import logging
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
@@ -80,10 +79,6 @@ if 'RDS_HOSTNAME' in os.environ:
 			'HOST': os.environ['RDS_HOSTNAME'],
 			'PORT': os.environ['RDS_PORT'],
 		}
-	}
-else:
-	DATABASES = {
-		'default': dj_database_url.config(default='postgres://joseph:dev_account@localhost:5432/django_dev_db')
 	}
 
 # Internationalization

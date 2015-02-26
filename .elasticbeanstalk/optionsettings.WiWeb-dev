@@ -1,6 +1,6 @@
 [aws:autoscaling:asg]
 Custom Availability Zones=
-MaxSize=4
+MaxSize=1
 MinSize=1
 
 [aws:autoscaling:launchconfiguration]
