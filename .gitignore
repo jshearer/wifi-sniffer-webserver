@@ -65,3 +65,4 @@ absible/
 *.sqlite3
 *.sqlite3-journal
 static/
+.elasticbeanstalk/
