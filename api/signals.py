@@ -1,4 +1,5 @@
 from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 from models import Recording
 from tasks import new_recording
