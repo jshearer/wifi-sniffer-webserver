@@ -16,16 +16,6 @@ ELBSubnets=
 Subnets=
 VPCId=
 
-[aws:elasticbeanstalk:application]
-Application Healthcheck URL=
-
-[aws:elasticbeanstalk:application:environment]
-PARAM1=
-PARAM2=
-PARAM3=
-PARAM4=
-PARAM5=
-
 [aws:elasticbeanstalk:container:python]
 NumProcesses=1
 NumThreads=15
