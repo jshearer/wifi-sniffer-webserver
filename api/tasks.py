@@ -39,7 +39,7 @@ def get_receiver_data(receiver_pks):
 @shared_task
 def new_recording(transmitter_pk, receiver_pk, rssi, timestamp):
 	cfg = cfg_collection.find_one()
-
+	
 	insert = False
 	if cgf is None:
 		insert = True
