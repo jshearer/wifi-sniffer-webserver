@@ -1,6 +1,6 @@
 import os
 import urlparse
-import redis
+from pymongo import MongoClient
 import json
 import time
 from celery import shared_task
@@ -8,11 +8,11 @@ from models import CalculatedPosition, Receiver
 
 from triangulation.intersector import find_common_center
 
-url = urlparse.urlparse(os.environ.get('REDISCLOUD_URL'))
-r = redis.Redis(host=url.hostname, port=url.port, password=url.password)
+mongo = MongoClient(os.environ['MONGOLAB_URI'])
 
-cache_key = 'wiloc_cached_recordings'
-cache_timestamp_key = 'wiloc_cached_recordings_last_update'
+db = mongo['wiloc_config']
+cache_key = 'cached_recordings'
+cache_timestamp_key = 'cached_recordings_last_update'
 
 #Perform a triangulation whenever either of these conditions are met
 max_recordings = 20
@@ -33,22 +33,22 @@ def get_receiver_data(receiver_pks):
 
 @shared_task
 def new_recording(transmitter_pk, receiver_pk, rssi, timestamp):
+	cfg = db.find_one()
+
+	if cgf is None:
+		cfg = {
+			cache_key: {},
+			cache_timestamp_key: time.time()
+		}
+
+	cached_recordings = cfg[cache_key]
+	last_updated = cfg[cache_timestamp_key]
+
 	#For debug
-	print("Received new recording data: ",transmitter_pk, receiver_pk, rssi, timestamp)
+	print('Received new recording data: ',transmitter_pk, receiver_pk, rssi, timestamp)
 
 	cached_recordings = r.get(cache_key)
 	last_updated = r.get(cache_timestamp_key)
-
-	#Parse the cached recordings and last updated, or use sane defaults for both
-	if cached_recordings is None:
-		cached_recordings = {}
-	else:
-		cached_recordings = json.loads(cached_recordings)
-
-	if last_updated is None:
-		last_updated = time.time()
-	else:
-		last_updated = json.loads(last_updated)
 
 	if not transmitter_pk in cached_recordings:
 		cached_recordings[transmitter_pk] = []
@@ -68,8 +68,9 @@ def new_recording(transmitter_pk, receiver_pk, rssi, timestamp):
 		#Use the cached recordings plus the receiver pks to triangulate the position
 		center,uncertainty = find_common_center(cached_recordings[transmitter_pk],get_receiver_data(receiver_list))
 		#Create db entry for this
-		print ("MADE CALCULATED RECORDING. DATA: "+str((center,uncertainty)))
+		print ('MADE CALCULATED RECORDING. DATA: '+str((center,uncertainty)))
 		cached_recordings[transmitter_pk] = []
 
-	r.set(cache_key,json.dumps(cached_recordings))
-	r.set(cache_timestamp_key,time.time())
+	db.replace(	{'_id':cgf._id},
+				cfg,
+				{'upsert':True})

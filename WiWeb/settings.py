@@ -17,7 +17,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 # Celery settings
 
-BROKER_URL = os.environ['REDISCLOUD_URL']
+BROKER_URL = os.environ['MONGOLAB_URI']
 
 #: Only add pickle to this list if your broker is secured
 #: from unwanted access (see userguide/security.html)
