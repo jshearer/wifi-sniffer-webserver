@@ -76,6 +76,7 @@ def new_recording(transmitter_pk, receiver_pk, rssi, timestamp):
 		cached_recordings[transmitter_pk] = []
 
 	if insert:
+		print('Trying to insert the cfg document: %s'%str(cfg))
 		cfg_collection.insert(cfg)
 	else:
 		cfg_collection.replace({'_id':cfg._id},cfg)
