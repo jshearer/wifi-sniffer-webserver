@@ -8,81 +8,74 @@ from serializers import *
 
 
 class UserViewSet(BulkModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+	"""
+	API endpoint that allows users to be viewed or edited.
+	"""
+	queryset = User.objects.all()
+	serializer_class = UserSerializer
 
 
 class GroupViewSet(BulkModelViewSet):
-    """
-    API endpoint that allows groups to be viewed or edited.
-    """
-    queryset = Group.objects.all()
-    serializer_class = GroupSerializer
+	"""
+	API endpoint that allows groups to be viewed or edited.
+	"""
+	queryset = Group.objects.all()
+	serializer_class = GroupSerializer
 
 
 class HostViewSet(BulkModelViewSet):
-    """
-    API endpoint that allows hosts to be viewed or edited.
-    """
-    queryset = Host.objects.all()
-    serializer_class = HostSerializer
-    filter_fields = ('name', 'device_uid', 'location', 'enabled')
+	"""
+	API endpoint that allows hosts to be viewed or edited.
+	"""
+	queryset = Host.objects.all()
+	serializer_class = HostSerializer
+	filter_fields = ('name', 'device_uid', 'location', 'enabled')
 
 class ReceiverViewSet(BulkModelViewSet):
-    """
-    API endpoint that allows groups to be viewed or edited.
-    """
-    queryset = Receiver.objects.all()
-    serializer_class = ReceiverSerializer
-    filter_fields = ('host', 'mac_addr', 'channel', 'x', 'y', 'z')
+	"""
+	API endpoint that allows groups to be viewed or edited.
+	"""
+	queryset = Receiver.objects.all()
+	serializer_class = ReceiverSerializer
+	filter_fields = ('host', 'mac_addr', 'channel', 'x', 'y', 'z')
 
 class WifiSettingsViewSet(BulkModelViewSet):
-    """
-    API endpoint that allows hosts to be viewed or edited.
-    """
-    queryset = WifiSettings.objects.all()
-    serializer_class = WifiSettingsSerializer
-    filter_fields = ('enabled', 'ESSID', 'security', 'ip', 'key', 'hidden')
+	"""
+	API endpoint that allows hosts to be viewed or edited.
+	"""
+	queryset = WifiSettings.objects.all()
+	serializer_class = WifiSettingsSerializer
+	filter_fields = ('enabled', 'ESSID', 'security', 'ip', 'key', 'hidden')
 
 class RecordingViewSet(BulkModelViewSet):
-    """
-    API endpoint that allows groups to be viewed or edited.
-    """
-    queryset = Recording.objects.all()
-    serializer_class = RecordingSerializer
-    filter_fields = ('rssi', 'data', 'transmitter', 'receiver', 'time')
-
-    def create(self, request, *args, **kwargs):
-        print("Create request: "+str(request))
-        serialized_data = super(RecordingViewSet,self).create(request,*args,**kwargs)
-        print("Request data: "+str(serialized_data))
-
-        return serialized_data
+	"""
+	API endpoint that allows groups to be viewed or edited.
+	"""
+	queryset = Recording.objects.all()
+	serializer_class = RecordingSerializer
+	filter_fields = ('rssi', 'data', 'transmitter', 'receiver', 'time')
 
 class TransmitterViewSet(BulkModelViewSet):
-    """
-    API endpoint that allows hosts to be viewed or edited.
-    """
-    queryset = Transmitter.objects.all()
-    serializer_class = TransmitterSerializer
-    filter_fields = ('mac_addr', 'name')
+	"""
+	API endpoint that allows hosts to be viewed or edited.
+	"""
+	queryset = Transmitter.objects.all()
+	serializer_class = TransmitterSerializer
+	filter_fields = ('mac_addr', 'name')
 
 
 class LocationViewSet(BulkModelViewSet):
-    """
-    API endpoint that allows groups to be viewed or edited.
-    """
-    queryset = Location.objects.all()
-    serializer_class = LocationSerializer
-    filter_fields = ('name', 'wifi_settings')
+	"""
+	API endpoint that allows groups to be viewed or edited.
+	"""
+	queryset = Location.objects.all()
+	serializer_class = LocationSerializer
+	filter_fields = ('name', 'wifi_settings')
 
 class CalculatedPositionViewSet(BulkModelViewSet):
-    """
-    API endpoint that allows hosts to be viewed or edited.
-    """
-    queryset = CalculatedPosition.objects.all()
-    serializer_class = CalculatedPositionSerializer
-    filter_fields = ('time', 'transmitter', 'uncertainty', 'x', 'y', 'z')
+	"""
+	API endpoint that allows hosts to be viewed or edited.
+	"""
+	queryset = CalculatedPosition.objects.all()
+	serializer_class = CalculatedPositionSerializer
+	filter_fields = ('time', 'transmitter', 'uncertainty', 'x', 'y', 'z')
