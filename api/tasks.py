@@ -10,7 +10,10 @@ from triangulation.intersector import find_common_center
 
 mongo = MongoClient(os.environ['MONGOLAB_URI'])
 
-db = mongo['wiloc_config']
+db = mongo.wiloc
+
+cfg_collection = db.config
+
 cache_key = 'cached_recordings'
 cache_timestamp_key = 'cached_recordings_last_update'
 
@@ -33,9 +36,11 @@ def get_receiver_data(receiver_pks):
 
 @shared_task
 def new_recording(transmitter_pk, receiver_pk, rssi, timestamp):
-	cfg = db.findOne()
+	cfg = cfg_collection.find_one()
 
+	insert = False
 	if cgf is None:
+		insert = True
 		cfg = {
 			cache_key: {},
 			cache_timestamp_key: time.time()
@@ -71,6 +76,7 @@ def new_recording(transmitter_pk, receiver_pk, rssi, timestamp):
 		print ('MADE CALCULATED RECORDING. DATA: '+str((center,uncertainty)))
 		cached_recordings[transmitter_pk] = []
 
-	db.replace(	{'_id':cgf._id},
-				cfg,
-				{'upsert':True})
+	if insert:
+		db.insert(cfg)
+	else:
+		db.replace({'_id':cgf._id},cfg)
