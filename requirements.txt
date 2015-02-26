@@ -17,6 +17,7 @@ kombu==3.0.24
 Padding==0.4
 psycopg2==2.6
 pycrypto==2.6.1
+pymongo==2.8
 pytz==2014.10
 redis==2.10.3
 requests==2.5.3
