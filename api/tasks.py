@@ -58,10 +58,10 @@ def new_recording(transmitter_pk, receiver_pk, rssi, timestamp):
 		cached_recordings[transmitter_pk] = []
 	
 	cached_recordings[transmitter_pk].append({
-		receiver: receiver_pk,
-		transmitter: transmitter_pk,
-		rssi: rssi,
-		timestamp: timestamp
+		'receiver': receiver_pk,
+		'transmitter': transmitter_pk,
+		'rssi': rssi,
+		'timestamp': timestamp
 	})
 
 	#Check if conditions are met
