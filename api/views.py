@@ -55,6 +55,10 @@ class RecordingViewSet(BulkModelViewSet):
     serializer_class = RecordingSerializer
     filter_fields = ('rssi', 'data', 'transmitter', 'receiver', 'time')
 
+    def create(self, request, *args, **kwargs):
+        print("Create request: "+str(request))
+        super(RecordingViewSet,self).create(request,*args,**kwargs)
+
 class TransmitterViewSet(BulkModelViewSet):
     """
     API endpoint that allows hosts to be viewed or edited.

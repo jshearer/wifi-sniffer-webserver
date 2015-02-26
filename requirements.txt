@@ -1,3 +1,7 @@
+amqp==1.4.6
+anyjson==0.3.3
+billiard==3.3.0.19
+celery==3.1.17
 dj-database-url==0.3.0
 dj-static==0.0.6
 Django==1.7.4
@@ -8,6 +12,14 @@ django-staticfiles==1.2.1
 djangorestframework==3.0.5
 djangorestframework-bulk==0.2
 gunicorn==19.2.1
+keen==0.3.9
+kombu==3.0.24
+Padding==0.4
 psycopg2==2.6
+pycrypto==2.6.1
+pytz==2014.10
+redis==2.10.3
+requests==2.5.3
 six==1.9.0
 static3==0.5.1
+sympy==0.7.6
