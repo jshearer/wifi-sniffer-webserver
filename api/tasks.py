@@ -54,9 +54,6 @@ def new_recording(transmitter_pk, receiver_pk, rssi, timestamp):
 	#For debug
 	print('Received new recording data: ',transmitter_pk, receiver_pk, rssi, timestamp)
 
-	cached_recordings = r.get(cache_key)
-	last_updated = r.get(cache_timestamp_key)
-
 	if not transmitter_pk in cached_recordings:
 		cached_recordings[transmitter_pk] = []
 	
