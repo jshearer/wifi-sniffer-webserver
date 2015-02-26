@@ -15,14 +15,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
 # Celery settings
-
-BROKER_URL = os.environ['REDISCLOUD_URL']
-
-#: Only add pickle to this list if your broker is secured
-#: from unwanted access (see userguide/security.html)
-CELERY_ACCEPT_CONTENT = ['pickle','json']
-CELERY_TASK_SERIALIZER = 'pickle'
-CELERY_RESULT_SERIALIZER = 'pickle'
+if 'REDISCLOUD_URL' in os.environ:
+	BROKER_URL = os.environ['REDIS_URL']
+	#: Only add pickle to this list if your broker is secured
+	#: from unwanted access (see userguide/security.html)
+	CELERY_ACCEPT_CONTENT = ['pickle','json']
+	CELERY_TASK_SERIALIZER = 'pickle'
+	CELERY_RESULT_SERIALIZER = 'pickle'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
