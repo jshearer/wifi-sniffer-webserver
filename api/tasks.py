@@ -33,7 +33,7 @@ def get_receiver_data(receiver_pks):
 
 @shared_task
 def new_recording(transmitter_pk, receiver_pk, rssi, timestamp):
-	cfg = db.find_one()
+	cfg = db.findOne()
 
 	if cgf is None:
 		cfg = {
