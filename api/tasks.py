@@ -34,9 +34,8 @@ def get_receiver_data(receiver_pks):
 @shared_task
 def new_recording(transmitter_pk, receiver_pk, rssi, timestamp):
 	#For debug
-	print(rec.transmitter.pk, rec.receiver.pk, rec.rssi, rec.time)
-	return
-	
+	print("Received new recording data: ",transmitter.pk, receiver.pk, rssi, timestamp)
+
 	cached_recordings = r.get(cache_key)
 	last_updated = r.get(cache_timestamp_key)
 
