@@ -8,9 +8,11 @@ from models import CalculatedPosition, Receiver
 
 from triangulation.intersector import find_common_center
 
-mongo = MongoClient(os.environ['MONGOLAB_URI'])
+mongouri = os.getenv('MONGOLAB_URI')
+parsed = urlsplit(mongouri)
+db_name = parsed.path[1:]
 
-db = mongo.wiloc
+db = MongoClient(mongouri)[db_name]
 
 cfg_collection = db.config
 
@@ -77,6 +79,6 @@ def new_recording(transmitter_pk, receiver_pk, rssi, timestamp):
 		cached_recordings[transmitter_pk] = []
 
 	if insert:
-		db.insert(cfg)
+		cfg_collection.insert(cfg)
 	else:
-		db.replace({'_id':cgf._id},cfg)
+		cfg_collection.replace({'_id':cgf._id},cfg)
