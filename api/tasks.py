@@ -41,7 +41,7 @@ def new_recording(transmitter_pk, receiver_pk, rssi, timestamp):
 	cfg = cfg_collection.find_one()
 
 	insert = False
-	if cgf is None:
+	if cfg is None:
 		insert = True
 		cfg = {
 			cache_key: {},
@@ -81,4 +81,4 @@ def new_recording(transmitter_pk, receiver_pk, rssi, timestamp):
 	if insert:
 		cfg_collection.insert(cfg)
 	else:
-		cfg_collection.replace({'_id':cgf._id},cfg)
+		cfg_collection.replace({'_id':cfg._id},cfg)
