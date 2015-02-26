@@ -57,7 +57,10 @@ class RecordingViewSet(BulkModelViewSet):
 
     def create(self, request, *args, **kwargs):
         print("Create request: "+str(request))
-        return super(RecordingViewSet,self).create(request,*args,**kwargs)
+        serialized_data = super(RecordingViewSet,self).create(request,*args,**kwargs)
+        print("Request data: "+str(serialized_data))
+
+        return serialized_data
 
 class TransmitterViewSet(BulkModelViewSet):
     """
