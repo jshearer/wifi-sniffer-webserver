@@ -9,7 +9,7 @@ from models import CalculatedPosition, Receiver
 from triangulation.intersector import find_common_center
 
 mongouri = os.getenv('MONGOLAB_URI')
-parsed = urlsplit(mongouri)
+parsed = urlparse.urlsplit(mongouri)
 db_name = parsed.path[1:]
 
 db = MongoClient(mongouri)[db_name]
@@ -39,7 +39,7 @@ def get_receiver_data(receiver_pks):
 @shared_task
 def new_recording(transmitter_pk, receiver_pk, rssi, timestamp):
 	cfg = cfg_collection.find_one()
-	
+
 	insert = False
 	if cgf is None:
 		insert = True
