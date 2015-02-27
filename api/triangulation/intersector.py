@@ -41,7 +41,7 @@ def find_common_center(recordings, receiver_data, mode='avg', more_data = False)
 		if recording['receiver'] not in circles.keys():
 			circles[recording['receiver']] = []
 
-		circles[recording['receiver']].append(recording.rssi)
+		circles[recording['receiver']].append(recording['rssi'])
 
 	#Perform singularization on strength arrays
 	#Create Circle instances
