@@ -1,5 +1,6 @@
 from sympy import Point, Circle, Polygon, Segment
 from itertools import permutations
+import json
 
 #This function assumes that the data has already been filtered by transmitter's MAC
 #As such, only one transmitter MAC should show up. If more than one exist, that's an error
@@ -105,6 +106,7 @@ def find_common_center(recordings, receiver_data, mode='avg', more_data = False)
 		ret = (intersects.pop(),0)
 	else:
 		ret = (None,None)
+		print("Recordings: %s, receiver_data: %s"%(json.dumps(recordings),json.dumps(receiver_data)))
 
 	if more_data:
 		return {'receivers':circles,'intersects':intersects,'uncertainty_shape':uncertainty_shape,'pos':ret[0],'uncertainty':ret[1]}
