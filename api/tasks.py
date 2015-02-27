@@ -20,8 +20,8 @@ cache_key = 'cached_recordings'
 cache_timestamp_key = 'cached_recordings_last_update'
 
 #Perform a triangulation whenever either of these conditions are met
-max_recordings = 20
-max_time = 5
+max_recordings = 50
+max_time = 500
 
 def get_receiver_data(receiver_pks):
 	data = {}
