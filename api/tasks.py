@@ -24,15 +24,15 @@ max_recordings = 20
 max_time = 5
 
 def get_receiver_data(receiver_pks):
-	data = []
+	data = {}
 	for receiver in receiver_pks:
 		receiver_obj = Receiver.objects.get(pk=receiver)
-		data.append({
+		data[receiver] = {
 			'receiver': receiver,
 			'x': receiver_obj.x,
 			'y': receiver_obj.y,
 			'z': receiver_obj.z
-		})
+		}
 
 	return data
 
