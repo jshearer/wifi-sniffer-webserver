@@ -102,7 +102,6 @@ def find_common_center(recordings, receiver_data, mode='avg', more_data = False)
 		ret = (intersects.pop(),0)
 	else:
 		ret = (None,None)
-		print("Recordings: %s, receiver_data: %s"%(json.dumps(recordings),json.dumps(receiver_data)))
 
 	if more_data:
 		return {'receivers':circles,'intersects':intersects,'uncertainty_shape':uncertainty_shape,'pos':ret[0],'uncertainty':ret[1]}
