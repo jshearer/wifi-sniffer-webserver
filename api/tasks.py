@@ -64,7 +64,7 @@ def new_recording(transmitter_pk, receiver_pk, rssi, timestamp):
 	})
 
 	#Check if conditions are met
-	if (time.time()-last_updated)>max_time or len(cached_recordings[transmitter_pk])>max_recordings:
+	if len(cached_recordings[transmitter_pk])>max_recordings:
 		#Get set of receiver pks
 		receiver_list = set([recording['receiver'] for recording in cached_recordings[transmitter_pk]])
 
@@ -75,6 +75,8 @@ def new_recording(transmitter_pk, receiver_pk, rssi, timestamp):
 		#Create db entry for this
 		print ('MADE CALCULATED RECORDING. DATA: '+str((center,uncertainty)))
 		cached_recordings[transmitter_pk] = []
+
+	cfg[cache_key] = cached_recordings
 
 	if insert:
 		cfg_collection.insert(cfg)
