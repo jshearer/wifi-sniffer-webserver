@@ -78,4 +78,4 @@ def new_recording(transmitter_pk, receiver_pk, rssi, timestamp):
 	if insert:
 		cfg_collection.insert(cfg)
 	else:
-		cfg_collection.replace({'_id':cfg[u'_id']},cfg)
+		cfg_collection.save(cfg)
