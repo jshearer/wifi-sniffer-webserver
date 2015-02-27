@@ -25,8 +25,6 @@ def find_common_center(recordings, receiver_data, mode='avg', more_data = False)
 	#		take min, avg, or max
 	#	Get center from database
 
-	print("------------------Starting triangulate-------------------")
-
 	if not mode in ['min','max','avg']:
 		raise Exception("Unrecognized singularization mode: "+str(mode))
 
@@ -83,8 +81,6 @@ def find_common_center(recordings, receiver_data, mode='avg', more_data = False)
 			if float(circle.center.distance(intersection))>float(circle.radius):
 				intersects.discard(intersection)
 
-	print("------------------Stopping triangulate-------------------")
-
 	# If points remaining>=3, create polygon from points, get polygon's area and centroid. That is predicted position, uncertainty
 	# If points remaining==2, create circle centered around midpoint, with d=distance between the points. Circle's center is predicted position, area is incertainty
 	# If points remaining==1, that is predicted position. Uncertainty is zero
@@ -106,7 +102,7 @@ def find_common_center(recordings, receiver_data, mode='avg', more_data = False)
 		ret = (intersects.pop(),0)
 	else:
 		ret = (None,None)
-		print("Recordings: %s, receiver_data: %s"%(json.dumps(recordings),json.dumps(receiver_data)))
+		print("Recordings: %s, receiver_data: %s"%(jsonifiy_data(recordings),jsonifiy_data(receiver_data)))
 
 	if more_data:
 		return {'receivers':circles,'intersects':intersects,'uncertainty_shape':uncertainty_shape,'pos':ret[0],'uncertainty':ret[1]}

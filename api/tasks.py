@@ -67,6 +67,8 @@ def new_recording(transmitter_pk, receiver_pk, rssi, timestamp):
 	if (time.time()-last_updated)>max_time or len(cached_recordings[transmitter_pk])>max_recordings:
 		#Get set of receiver pks
 		receiver_list = set([recording['receiver'] for recording in cached_recordings[transmitter_pk]])
+
+		print('Calculating position. #Cached recordings: %i'%len(cached_recordings[transmitter_pk]))
 		
 		#Use the cached recordings plus the receiver pks to triangulate the position
 		center,uncertainty = find_common_center(cached_recordings[transmitter_pk],get_receiver_data(receiver_list))
