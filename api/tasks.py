@@ -54,9 +54,6 @@ def new_recording(transmitter_pk, receiver_pk, rssi, timestamp):
 	cached_recordings = cfg[cache_key]
 	last_updated = cfg[cache_timestamp_key]
 
-	#For debug
-	print('Received new recording data: ',transmitter_pk, receiver_pk, rssi, timestamp)
-
 	if not transmitter_pk in cached_recordings:
 		cached_recordings[transmitter_pk] = []
 	
@@ -81,5 +78,4 @@ def new_recording(transmitter_pk, receiver_pk, rssi, timestamp):
 	if insert:
 		cfg_collection.insert(cfg)
 	else:
-		print('Trying to insert the cfg document: %s'%str(cfg))
 		cfg_collection.replace({'_id':cfg[u'_id']},cfg)
