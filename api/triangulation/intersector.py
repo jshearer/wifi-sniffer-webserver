@@ -24,6 +24,8 @@ def find_common_center(recordings, receiver_data, mode='avg', more_data = False)
 	#		take min, avg, or max
 	#	Get center from database
 
+	print("------------------Starting triangulate-------------------")
+
 	if not mode in ['min','max','avg']:
 		raise Exception("Unrecognized singularization mode: "+str(mode))
 
@@ -63,6 +65,7 @@ def find_common_center(recordings, receiver_data, mode='avg', more_data = False)
 		else:
 			raise Exception("Unknown receiver found. Please enter data for: "+str(transmitter))
 
+		print("Circle: (%f,%f):%f"%(x,y,radius))
 		circles[receiver] = Circle(Point(x,y),abs(radius))
 
 	# Find all circle intersection points, store in set
@@ -78,6 +81,8 @@ def find_common_center(recordings, receiver_data, mode='avg', more_data = False)
 		for intersection in set(intersects):
 			if float(circle.center.distance(intersection))>float(circle.radius):
 				intersects.discard(intersection)
+
+	print("------------------Stopping triangulate-------------------)
 
 	# If points remaining>=3, create polygon from points, get polygon's area and centroid. That is predicted position, uncertainty
 	# If points remaining==2, create circle centered around midpoint, with d=distance between the points. Circle's center is predicted position, area is incertainty
