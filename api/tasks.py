@@ -28,10 +28,10 @@ def get_receiver_data(receiver_pks):
 	for receiver in receiver_pks:
 		receiver_obj = Receiver.objects.get(pk=receiver)
 		data.append({
-			receiver: receiver,
-			x: receiver_obj.x,
-			y: receiver_obj.y,
-			z: receiver_obj.z
+			'receiver': receiver,
+			'x': receiver_obj.x,
+			'y': receiver_obj.y,
+			'z': receiver_obj.z
 		})
 
 	return data
