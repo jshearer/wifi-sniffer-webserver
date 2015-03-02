@@ -8,3 +8,4 @@ from tasks import new_recording
 def my_handler(sender, **kwargs):
 	rec = kwargs['instance']
 	new_recording.delay(rec.transmitter.pk, rec.receiver.pk, rec.rssi, rec.time)
+	rec.delete()

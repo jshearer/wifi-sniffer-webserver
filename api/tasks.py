@@ -4,7 +4,7 @@ from pymongo import MongoClient
 import json
 import time
 from celery import shared_task
-from models import CalculatedPosition, Receiver
+from models import CalculatedPosition, Receiver, Transmitter
 
 from triangulation.intersector import find_common_center
 
@@ -74,6 +74,8 @@ def new_recording(transmitter_pk, receiver_pk, rssi, timestamp):
 		center,uncertainty = find_common_center(cached_recordings[transmitter_pk],get_receiver_data(receiver_list))
 		#Create db entry for this
 		print ('MADE CALCULATED RECORDING. DATA: '+str((center,uncertainty)))
+		calcpos = CalculatedPosition(time=timestamp,transmitter=Transmitter.objects.get(pk=transmitter_pk),x=center.x,y=center.y,z=0,uncertainty=uncertainty)
+		calcpos.save()
 		cached_recordings[transmitter_pk] = []
 
 	cfg[cache_key] = cached_recordings
