@@ -11,6 +11,7 @@ django-jsonfield==0.9.13
 django-staticfiles==1.2.1
 djangorestframework==3.0.5
 djangorestframework-bulk==0.2
+graypy==0.2.11
 gunicorn==19.2.1
 keen==0.3.9
 kombu==3.0.24
