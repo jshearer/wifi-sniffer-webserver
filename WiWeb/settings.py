@@ -1,4 +1,4 @@
-"""
+'''
 Django settings for WiWeb project.
 
 For more information on this file, see
@@ -6,7 +6,7 @@ https://docs.djangoproject.com/en/1.7/topics/settings/
 
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.7/ref/settings/
-"""
+'''
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
@@ -15,8 +15,11 @@ import logging
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
-# Celery settings
+#Graylog settings
+GRAYLOG_ADDRESS = 'logging.josephshearer.net'
+GRAYLOG_PORT = 12205
 
+# Celery settings
 BROKER_URL = os.environ['MONGOLAB_URI']
 
 #: Only add pickle to this list if your broker is secured
@@ -115,17 +118,23 @@ logging.warning(STATIC_ROOT)
 STATIC_URL = '/static/'
 
 LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "handlers": {
-        "console": {
-            "level": "INFO",
-            "class": "logging.StreamHandler",
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
         },
+        'graypy': {
+            'level': 'INFO',
+            'class': 'graypy.GELFHandler',
+            'host': GRAYLOG_ADDRESS,
+            'port': GRAYLOG_PORT,
+        }
     },
-    "loggers": {
-        "django": {
-            "handlers": ["console"],
+    'loggers': {
+        'django': {
+            'handlers': ['console','graypy'],
         }
     }
 }
