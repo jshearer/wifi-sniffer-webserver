@@ -1,8 +1,9 @@
 import os
 import urlparse
-from pymongo import MongoClient
+import logging
 import json
 import time
+from pymongo import MongoClient
 from celery import shared_task
 from models import CalculatedPosition, Receiver, Transmitter
 
@@ -65,6 +66,10 @@ def new_recording(transmitter_pk, receiver_pk, rssi, timestamp):
 
 	#Check if conditions are met
 	if len(cached_recordings[transmitter_pk])>max_recordings:
+		tx = Transmitter.objects.get(pk=transmitter_pk)
+		logging.log("Recording cache full. Performing position calculation.", extra = {
+				'transmitter': str(tx)
+			})
 		#Get set of receiver pks
 		receiver_list = set([recording['receiver'] for recording in cached_recordings[transmitter_pk]])
 
@@ -73,9 +78,13 @@ def new_recording(transmitter_pk, receiver_pk, rssi, timestamp):
 		#Use the cached recordings plus the receiver pks to triangulate the position
 		center,uncertainty = find_common_center(cached_recordings[transmitter_pk],get_receiver_data(receiver_list))
 		#Create db entry for this
-		print ('MADE CALCULATED RECORDING. DATA: '+str((center,uncertainty)))
-		calcpos = CalculatedPosition(time=timestamp,transmitter=Transmitter.objects.get(pk=transmitter_pk),x=center.x,y=center.y,z=0,uncertainty=uncertainty)
-		calcpos.save()
+		if center and uncertainty:
+			calcpos = CalculatedPosition(time=timestamp,transmitter=tx,x=center.x,y=center.y,z=0,uncertainty=uncertainty)
+			calcpos.save()
+			logging.log("Calculated position!", extra = {
+				'transmitter': str(tx),
+				'position': str(calcpos)
+			})
 		cached_recordings[transmitter_pk] = []
 
 	cfg[cache_key] = cached_recordings
