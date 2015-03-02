@@ -67,7 +67,7 @@ def new_recording(transmitter_pk, receiver_pk, rssi, timestamp):
 	#Check if conditions are met
 	if len(cached_recordings[transmitter_pk])>max_recordings:
 		tx = Transmitter.objects.get(pk=transmitter_pk)
-		logging.log("Recording cache full. Performing position calculation.", extra = {
+		logging.info("Recording cache full. Performing position calculation.", extra = {
 				'transmitter': str(tx)
 			})
 		#Get set of receiver pks
@@ -81,7 +81,7 @@ def new_recording(transmitter_pk, receiver_pk, rssi, timestamp):
 		if center and uncertainty:
 			calcpos = CalculatedPosition(time=timestamp,transmitter=tx,x=center.x,y=center.y,z=0,uncertainty=uncertainty)
 			calcpos.save()
-			logging.log("Calculated position!", extra = {
+			logging.info("Calculated position!", extra = {
 				'transmitter': str(tx),
 				'position': str(calcpos)
 			})
