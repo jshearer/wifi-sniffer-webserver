@@ -126,7 +126,7 @@ LOGGING = {
             'class': 'logging.StreamHandler',
         },
         'graypy': {
-            'level': 'INFO',
+            'level': 'DEBUG',
             'class': 'graypy.GELFHandler',
             'host': GRAYLOG_ADDRESS,
             'port': GRAYLOG_PORT,
