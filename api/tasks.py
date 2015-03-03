@@ -79,17 +79,17 @@ def new_recording(transmitter_pk, receiver_pk, rssi, timestamp):
 		try:
 			#Use the cached recordings plus the receiver pks to triangulate the position
 			center,uncertainty = find_common_center(cached_recordings[transmitter_pk],get_receiver_data(receiver_list))
+			#Create db entry for this
+			if center and uncertainty:
+				calcpos = CalculatedPosition(time=timestamp,transmitter=tx,x=center.x,y=center.y,z=0,uncertainty=uncertainty)
+				calcpos.save()
+				logger.info("Calculated position!", extra = {
+					'transmitter': str(tx),
+					'position': str(calcpos)
+				})
+			cached_recordings[transmitter_pk] = []
 		except:
 			logger.error('Unexpected error raised: '+(traceback.format_exc()))
-		#Create db entry for this
-		if center and uncertainty:
-			calcpos = CalculatedPosition(time=timestamp,transmitter=tx,x=center.x,y=center.y,z=0,uncertainty=uncertainty)
-			calcpos.save()
-			logger.info("Calculated position!", extra = {
-				'transmitter': str(tx),
-				'position': str(calcpos)
-			})
-		cached_recordings[transmitter_pk] = []
 
 	cfg[cache_key] = cached_recordings
 
