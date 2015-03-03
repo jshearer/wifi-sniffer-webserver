@@ -61,7 +61,7 @@ def new_recording(transmitter_pk, receiver_pk, rssi, timestamp):
 				'cache': []
 			})
 
-		cached_recordings_ids[transmitter_pk] = id_new_tx
+		cached_recording_ids[transmitter_pk] = id_new_tx
 		cfg['cached_recording_ids'] = cached_recording_ids
 		cfg_collection.save(cfg)
 
