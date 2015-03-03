@@ -1,6 +1,7 @@
 import os
 import urlparse
 import logging
+import traceback
 logger = logging.getLogger('api')
 
 import json
@@ -75,8 +76,11 @@ def new_recording(transmitter_pk, receiver_pk, rssi, timestamp):
 		#Get set of receiver pks
 		receiver_list = set([recording['receiver'] for recording in cached_recordings[transmitter_pk]])
 		
-		#Use the cached recordings plus the receiver pks to triangulate the position
-		center,uncertainty = find_common_center(cached_recordings[transmitter_pk],get_receiver_data(receiver_list))
+		try:
+			#Use the cached recordings plus the receiver pks to triangulate the position
+			center,uncertainty = find_common_center(cached_recordings[transmitter_pk],get_receiver_data(receiver_list))
+		except:
+			logger.error('Unknown error encountered: '+(''.join(traceback.format_tb(tb))))
 		#Create db entry for this
 		if center and uncertainty:
 			calcpos = CalculatedPosition(time=timestamp,transmitter=tx,x=center.x,y=center.y,z=0,uncertainty=uncertainty)
