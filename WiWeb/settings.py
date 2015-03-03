@@ -136,7 +136,7 @@ LOGGING = {
         'django': {
             'handlers': ['console','graypy'],
         },
-        'WiWeb': {
+        'api': {
             'handlers': ['console','graypy']
         }
     }
