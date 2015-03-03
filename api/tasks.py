@@ -1,8 +1,7 @@
 import os
 import urlparse
 import logging
-logger = logging.getLogger(__name__)
-print("Logger name: %s"%__name__)
+logger = logging.getLogger('api')
 
 import json
 import time
