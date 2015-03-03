@@ -19,9 +19,7 @@ db_name = parsed.path[1:]
 db = MongoClient(mongouri)[db_name]
 
 cfg_collection = db.config
-
-cache_key = 'cached_recordings'
-cache_timestamp_key = 'cached_recordings_last_update'
+cache_collection = db.cache
 
 #Perform a triangulation whenever either of these conditions are met
 max_recordings = 50
@@ -51,34 +49,42 @@ def new_recording(transmitter_pk, receiver_pk, rssi, timestamp):
 	if cfg is None:
 		insert = True
 		cfg = {
-			cache_key: {},
-			cache_timestamp_key: time.time()
+			'cached_recording_ids': {}
 		}
+		cfg_collection.insert(cfg)
 
-	cached_recordings = cfg[cache_key]
-	last_updated = cfg[cache_timestamp_key]
+	cached_recording_ids = cfg['cached_recording_ids']
 
-	if not transmitter_pk in cached_recordings:
-		cached_recordings[transmitter_pk] = []
+	if not transmitter_pk in cached_recording_ids:
+		id_new_tx = cache_collection.insert({
+				'transmitter_pk': transmitter_pk,
+				'cache': []
+			})
+
+		cached_recordings_ids[transmitter_pk] = id_new_tx
+		cfg['cached_recording_ids'] = cached_recording_ids
+		cfg_collection.save(cfg)
+
+	tx_cache = cache_collection.find_one({'_id':cached_recording_ids[transmitter_pk]})
 	
-	cached_recordings[transmitter_pk].append({
+	tx_cache.append({
 		'receiver': receiver_pk,
 		'transmitter': transmitter_pk,
 		'rssi': rssi
 	})
 
 	#Check if conditions are met
-	if len(cached_recordings[transmitter_pk])>max_recordings:
+	if len(tx_cache)>max_recordings:
 		tx = Transmitter.objects.get(pk=transmitter_pk)
 		logger.info("Recording cache full. Performing position calculation.", extra = {
 				'transmitter': str(tx)
 			})
 		#Get set of receiver pks
-		receiver_list = set([recording['receiver'] for recording in cached_recordings[transmitter_pk]])
+		receiver_list = set([recording['receiver'] for recording in tx_cache])
 		
 		try:
 			#Use the cached recordings plus the receiver pks to triangulate the position
-			center,uncertainty = find_common_center(cached_recordings[transmitter_pk],get_receiver_data(receiver_list))
+			center,uncertainty = find_common_center(tx_cache,get_receiver_data(receiver_list))
 			#Create db entry for this
 			if center and uncertainty:
 				calcpos = CalculatedPosition(time=timestamp,transmitter=tx,x=center.x,y=center.y,z=0,uncertainty=uncertainty)
@@ -87,13 +93,8 @@ def new_recording(transmitter_pk, receiver_pk, rssi, timestamp):
 					'transmitter': str(tx),
 					'position': str(calcpos)
 				})
-			cached_recordings[transmitter_pk] = []
+			tx_cache = []
 		except Exception as e:
 			logger.error('Unexpected error raised: %s, %s'%(str(e),traceback.format_exc()))
 
-	cfg[cache_key] = cached_recordings
-
-	if insert:
-		cfg_collection.insert(cfg)
-	else:
-		cfg_collection.save(cfg)
+	cache_collection.save(tx_cache)
