@@ -134,7 +134,7 @@ LOGGING = {
     },
     'loggers': {
         'django': {
-            'handlers': ['console','graypy'],
+            'handlers': ['graypy'],
         },
         'api': {
             'handlers': ['graypy'],
