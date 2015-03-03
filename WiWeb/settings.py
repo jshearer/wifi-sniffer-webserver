@@ -137,7 +137,7 @@ LOGGING = {
             'handlers': ['console','graypy'],
         },
         'api': {
-            'handlers': ['console','graypy'],
+            'handlers': ['graypy'],
             'propagate': True,
             'level':'DEBUG',
         }
