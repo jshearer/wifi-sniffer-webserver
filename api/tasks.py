@@ -1,6 +1,8 @@
 import os
 import urlparse
 import logging
+logger = logging.getLogger(__name__)
+
 import json
 import time
 from pymongo import MongoClient
@@ -67,7 +69,7 @@ def new_recording(transmitter_pk, receiver_pk, rssi, timestamp):
 	#Check if conditions are met
 	if len(cached_recordings[transmitter_pk])>max_recordings:
 		tx = Transmitter.objects.get(pk=transmitter_pk)
-		logging.info("Recording cache full. Performing position calculation.", extra = {
+		logger.info("Recording cache full. Performing position calculation.", extra = {
 				'transmitter': str(tx)
 			})
 		#Get set of receiver pks
@@ -81,7 +83,7 @@ def new_recording(transmitter_pk, receiver_pk, rssi, timestamp):
 		if center and uncertainty:
 			calcpos = CalculatedPosition(time=timestamp,transmitter=tx,x=center.x,y=center.y,z=0,uncertainty=uncertainty)
 			calcpos.save()
-			logging.info("Calculated position!", extra = {
+			logger.info("Calculated position!", extra = {
 				'transmitter': str(tx),
 				'position': str(calcpos)
 			})
