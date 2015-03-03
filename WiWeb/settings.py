@@ -138,7 +138,7 @@ LOGGING = {
         },
         'api': {
             'handlers': ['graypy'],
-            'propagate': False
+            'propagate': False,
             'level':'INFO',
         }
     }
