@@ -134,10 +134,11 @@ LOGGING = {
     },
     'loggers': {
         'django': {
-            'handlers': ['graypy'],
+            'handlers': ['graypy','console'],
         },
         'api': {
             'handlers': ['graypy'],
+            'propagate': False
             'level':'INFO',
         }
     }
