@@ -64,7 +64,6 @@ def find_common_center(recordings, receiver_data, mode='avg', more_data = False)
 		else:
 			raise Exception("Unknown receiver found. Please enter data for: "+str(transmitter))
 
-		print("Circle: (%f,%f):%f"%(x,y,radius))
 		circles[receiver] = Circle(Point(x,y),abs(radius))
 
 	# Find all circle intersection points, store in set
