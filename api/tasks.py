@@ -88,8 +88,8 @@ def new_recording(transmitter_pk, receiver_pk, rssi, timestamp):
 					'position': str(calcpos)
 				})
 			cached_recordings[transmitter_pk] = []
-		except:
-			logger.error('Unexpected error raised: '+(traceback.format_exc()))
+		except Exception as e:
+			logger.error('Unexpected error raised: %s, %s'%(str(e),traceback.format_exc()))
 
 	cfg[cache_key] = cached_recordings
 
