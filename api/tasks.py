@@ -65,8 +65,10 @@ def new_recording(transmitter_pk, receiver_pk, rssi, timestamp):
 		cfg['cached_recording_ids'] = cached_recording_ids
 		cfg_collection.save(cfg)
 
-	tx_cache = cache_collection.find_one({'_id':cached_recording_ids[transmitter_pk]})
+	tx_cache_obj = cache_collection.find_one({'_id':cached_recording_ids[transmitter_pk]})
 	
+	tx_cache = tx_cache_obj.cache
+
 	tx_cache.append({
 		'receiver': receiver_pk,
 		'transmitter': transmitter_pk,
@@ -97,4 +99,6 @@ def new_recording(transmitter_pk, receiver_pk, rssi, timestamp):
 		except Exception as e:
 			logger.error('Unexpected error raised: %s, %s'%(str(e),traceback.format_exc()))
 
-	cache_collection.save(tx_cache)
+	tx_cache_obj.cache = tx_cache
+
+	cache_collection.save(tx_cache_obj)
