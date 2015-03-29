@@ -5,6 +5,8 @@ from rest_framework.decorators import list_route
 from rest_framework.response import Response
 from rest_framework_bulk import BulkModelViewSet
 
+import dateutil.parser
+
 from models import Host, Receiver, WifiSettings, Location, Recording, Transmitter, CalculatedPosition
 from serializers import *
 
@@ -84,8 +86,8 @@ class CalculatedPositionViewSet(BulkModelViewSet):
 	filter_fields = ('time', 'transmitter', 'uncertainty', 'x', 'y', 'z')
 
 	@list_route()
-	def since(self, request, since=None):
-		return Response({"since_when": since})
+	def since(self, request):
+		return Response({"since_when": dateutil.parser.parse(request.GET.get('start', '1970'))})
 
 
 
