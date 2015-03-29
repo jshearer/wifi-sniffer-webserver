@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from rest_framework import filters
-from rest_framework.decorators import link
+from rest_framework.decorators import list_route
 from rest_framework.response import Response
 from rest_framework_bulk import BulkModelViewSet
 
@@ -83,7 +83,7 @@ class CalculatedPositionViewSet(BulkModelViewSet):
 	serializer_class = CalculatedPositionSerializer
 	filter_fields = ('time', 'transmitter', 'uncertainty', 'x', 'y', 'z')
 
-	@link()
+	@list_route()
 	def since(self, request, since=None):
 		return Response({"since_when": since})
 
