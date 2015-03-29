@@ -87,7 +87,10 @@ class CalculatedPositionViewSet(BulkModelViewSet):
 
 	@list_route()
 	def since(self, request):
-		return Response({"since_when": dateutil.parser.parse(request.GET.get('start', '1970'))})
+		start_date = dateutil.parser.parse(request.GET.get('start', '1970'))
+
+		return CalculatedPosition.objects.all().filter(timestamp__gte = start_date)
+
 
 
 
