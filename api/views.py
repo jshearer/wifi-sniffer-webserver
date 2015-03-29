@@ -1,6 +1,8 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from rest_framework import filters
+from rest_framework.decorators import link
+from rest_framework.response import Response
 from rest_framework_bulk import BulkModelViewSet
 
 from models import Host, Receiver, WifiSettings, Location, Recording, Transmitter, CalculatedPosition
@@ -21,6 +23,7 @@ class GroupViewSet(BulkModelViewSet):
 	"""
 	queryset = Group.objects.all()
 	serializer_class = GroupSerializer
+
 
 
 class HostViewSet(BulkModelViewSet):
@@ -79,3 +82,10 @@ class CalculatedPositionViewSet(BulkModelViewSet):
 	queryset = CalculatedPosition.objects.all()
 	serializer_class = CalculatedPositionSerializer
 	filter_fields = ('time', 'transmitter', 'uncertainty', 'x', 'y', 'z')
+
+	@link()
+	def since(self, request, since=None):
+		return Response({"since_when": since})
+
+
+
